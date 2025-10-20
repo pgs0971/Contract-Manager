@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reinsurance Slip Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --color-brand-primary: #003366;
+        --color-brand-secondary: #0055a4;
+        --color-brand-accent: #f0b429;
+        --color-brand-light: #e6f0ff;
+        --color-brand-dark: #001a33;
+        
+        --color-bg-base: #f3f4f6; /* gray-100 */
+        --color-bg-surface: #ffffff; /* white */
+        --color-bg-muted: #f9fafb; /* gray-50 */
+        --color-bg-hover: #e5e7eb; /* gray-200 */
+        --color-bg-sidebar: #003366;
+        --color-bg-sidebar-hover: #001a33;
+        --color-bg-sidebar-active: #0055a4;
+        --color-text-sidebar: #ffffff;
+
+        --color-text-base: #374151; /* gray-700 */
+        --color-text-heading: #111827; /* gray-900 */
+        --color-text-muted: #6b7280; /* gray-500 */
+        --color-text-inverted: #ffffff;
+        --color-text-accent: #0055a4; /* brand-secondary */
+
+        --color-border-base: #e5e7eb; /* gray-200 */
+        --color-border-input: #d1d5db; /* gray-300 */
+        --color-border-focus: #0055a4; /* brand-secondary */
+
+        --color-danger: #dc2626; /* red-600 */
+        --color-danger-text: #dc2626;
+        --color-success: #16a34a; /* green-600 */
+        --color-success-text: #16a34a;
+        --color-warning-text: #ca8a04; /* yellow-600 */
+        
+        --color-chart-1: #3b82f6; /* blue-500 */
+        --color-chart-2: #10b981; /* emerald-500 */
+        --color-chart-3: #f59e0b; /* amber-500 */
+        --color-chart-4: #ef4444; /* red-500 */
+        --color-chart-5: #8b5cf6; /* violet-500 */
+        --color-chart-6: #ec4899; /* pink-500 */
+      }
+
+      [data-theme="dark"] {
+        --color-brand-primary: #60a5fa; /* blue-400 */
+        --color-brand-secondary: #3b82f6; /* blue-500 */
+        --color-brand-accent: #facc15; /* yellow-400 */
+        --color-brand-light: #1e3a8a; /* blue-900 */
+        --color-brand-dark: #1e40af; /* blue-800 */
+        
+        --color-bg-base: #111827; /* gray-900 */
+        --color-bg-surface: #1f2937; /* gray-800 */
+        --color-bg-muted: #374151; /* gray-700 */
+        --color-bg-hover: #4b5563; /* gray-600 */
+        --color-bg-sidebar: #111827;
+        --color-bg-sidebar-hover: #374151;
+        --color-bg-sidebar-active: #3b82f6;
+        --color-text-sidebar: #f9fafb;
+
+        --color-text-base: #d1d5db; /* gray-300 */
+        --color-text-heading: #f9fafb; /* gray-50 */
+        --color-text-muted: #9ca3af; /* gray-400 */
+        --color-text-inverted: #111827;
+        --color-text-accent: #60a5fa;
+
+        --color-border-base: #374151; /* gray-700 */
+        --color-border-input: #4b5563; /* gray-600 */
+        --color-border-focus: #3b82f6; /* blue-500 */
+
+        --color-danger: #ef4444; /* red-500 */
+        --color-danger-text: #f87171; /* red-400 */
+        --color-success: #22c55e; /* green-500 */
+        --color-success-text: #4ade80; /* green-400 */
+        --color-warning-text: #fde047; /* yellow-300 */
+
+        --color-chart-1: #60a5fa; /* blue-400 */
+        --color-chart-2: #34d399; /* emerald-400 */
+        --color-chart-3: #fbbf24; /* amber-400 */
+        --color-chart-4: #f87171; /* red-400 */
+        --color-chart-5: #a78bfa; /* violet-400 */
+        --color-chart-6: #f472b6; /* pink-400 */
+      }
+
+      [data-theme="high-contrast"] {
+        --color-brand-primary: #000000;
+        --color-brand-secondary: #0000ff;
+        --color-brand-accent: #ffff00;
+        --color-brand-light: #dddddd;
+        --color-brand-dark: #000000;
+        
+        --color-bg-base: #ffffff;
+        --color-bg-surface: #ffffff;
+        --color-bg-muted: #f0f0f0;
+        --color-bg-hover: #cccccc;
+        --color-bg-sidebar: #000000;
+        --color-bg-sidebar-hover: #333333;
+        --color-bg-sidebar-active: #0000ff;
+        --color-text-sidebar: #ffffff;
+
+        --color-text-base: #000000;
+        --color-text-heading: #000000;
+        --color-text-muted: #000000;
+        --color-text-inverted: #ffffff;
+        --color-text-accent: #0000ff;
+
+        --color-border-base: #000000;
+        --color-border-input: #000000;
+        --color-border-focus: #0000ff;
+
+        --color-danger: #ff0000;
+        --color-danger-text: #ff0000;
+        --color-success: #00ff00;
+        --color-success-text: #00ff00;
+        --color-warning-text: #000000;
+
+        --color-chart-1: #0000ff; /* blue */
+        --color-chart-2: #008000; /* green */
+        --color-chart-3: #ffa500; /* orange */
+        --color-chart-4: #ff0000; /* red */
+        --color-chart-5: #800080; /* purple */
+        --color-chart-6: #ffc0cb; /* pink */
+      }
+    </style>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-primary': 'var(--color-brand-primary)',
+              'brand-secondary': 'var(--color-brand-secondary)',
+              'brand-accent': 'var(--color-brand-accent)',
+              'brand-light': 'var(--color-brand-light)',
+              'brand-dark': 'var(--color-brand-dark)',
+              
+              'bg-base': 'var(--color-bg-base)',
+              'bg-surface': 'var(--color-bg-surface)',
+              'bg-muted': 'var(--color-bg-muted)',
+              'bg-hover': 'var(--color-bg-hover)',
+              'bg-sidebar': 'var(--color-bg-sidebar)',
+              'bg-sidebar-hover': 'var(--color-bg-sidebar-hover)',
+              'bg-sidebar-active': 'var(--color-bg-sidebar-active)',
+              'text-sidebar': 'var(--color-text-sidebar)',
+
+              'text-base': 'var(--color-text-base)',
+              'text-heading': 'var(--color-text-heading)',
+              'text-muted': 'var(--color-text-muted)',
+              'text-inverted': 'var(--color-text-inverted)',
+              'text-accent': 'var(--color-text-accent)',
+
+              'border-base': 'var(--color-border-base)',
+              'border-input': 'var(--color-border-input)',
+              'border-focus': 'var(--color-border-focus)',
+              
+              'danger': 'var(--color-danger)',
+              'danger-text': 'var(--color-danger-text)',
+              'success': 'var(--color-success)',
+              'success-text': 'var(--color-success-text)',
+              'warning-text': 'var(--color-warning-text)',
+
+              'chart-1': 'var(--color-chart-1)',
+              'chart-2': 'var(--color-chart-2)',
+              'chart-3': 'var(--color-chart-3)',
+              'chart-4': 'var(--color-chart-4)',
+              'chart-5': 'var(--color-chart-5)',
+              'chart-6': 'var(--color-chart-6)',
+            },
+          },
+        },
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "uuid": "https://aistudiocdn.com/uuid@^13.0.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-bg-base">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

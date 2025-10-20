@@ -1,0 +1,5 @@
+{
+  "name": "Reinsurance Slip Manager",
+  "description": "A comprehensive single-page application for creating, managing, and previewing reinsurance slip contracts. It features detailed data entry for all contract sections, automatic calculations, state persistence via localStorage, and JSON import/export functionality.",
+  "requestFramePermissions": []
+}
